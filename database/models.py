@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-from database.database import Base
 from sqlalchemy import Column, Integer, String
+
+from database.database import Base
 
 
 class User(Base):
@@ -21,4 +22,6 @@ class Task(Base):
     status = Column(String)
 
     def __repr__(self):
-        return f"<Task(id='{self.id}', uuid='{self.username}', status='{self.password}')>"
+        return (
+            f"<Task(id='{self.id}', uuid='{self.username}', status='{self.password}')>"
+        )

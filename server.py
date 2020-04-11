@@ -1,12 +1,14 @@
-import tornado.ioloop
-import tornado.web
-import tornado.process
-import tornado.escape
 import json
-from publisher.publisher import Publisher
+
+import tornado.escape
+import tornado.ioloop
+import tornado.process
+import tornado.web
+
+import settings
 from database.crud import DbManager
 from database.schemas import User, Task
-import settings
+from publisher.publisher import Publisher
 
 publisher = Publisher()
 manager = DbManager()
@@ -19,7 +21,13 @@ class GetStatusHandler(tornado.web.RequestHandler):
     def get(self):
         if self.get_secure_cookie("user"):
             uuid = self.get_argument("uuid", None)
-            self.write({"status": "ok", "info": manager.get_task_status(uuid) or "Not exists", "uuid": uuid})
+            self.write(
+                {
+                    "status": "ok",
+                    "info": manager.get_task_status(uuid) or "Not exists",
+                    "uuid": uuid,
+                }
+            )
         else:
             self.write({"status": "fail", "info": "User not logged in"})
 
@@ -94,7 +102,8 @@ def make_app():
             (r"/api/register", RegisterHandler),
             (r"/api/login", AuthLoginHandler),
             (r"/api/logout", AuthLogoutHandler),
-        ], **{
+        ],
+        **{
             "cookie_secret": settings.COOKIE_SECRET,
             "login_url": "/api/login",
             "debug": True,
@@ -109,8 +118,8 @@ if __name__ == "__main__":
     manager.create_all()
 
     polling = tornado.ioloop.PeriodicCallback(
-        lambda: publisher.process_data_events(),
-        1000)
+        lambda: publisher.process_data_events(), 1000
+    )
     polling.start()
 
     tornado.ioloop.IOLoop.current().start()

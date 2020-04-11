@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
-from os import path
-from urllib.parse import urlparse
-from pathlib import Path
-from requests import get
 from multiprocessing import Pool
+from os import path
+from pathlib import Path
 from time import sleep
+from urllib.parse import urlparse
+
+from requests import get
 
 
 class Downloader:
@@ -47,12 +48,7 @@ class Downloader:
         :return: None
         """
         sleep(10)
-        task = [
-            {
-                "url": url,
-                "uuid": uuid
-            } for url in url_list
-        ]
+        task = [{"url": url, "uuid": uuid} for url in url_list]
         with Pool(processes=processes) as pool:
             for status in pool.imap_unordered(self.url_response, task):
                 print(status)

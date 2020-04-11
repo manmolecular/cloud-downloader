@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
-import pika
 from json import dumps
 from uuid import uuid4
+
+import pika
+
 from database.crud import DbManager
 
 manager = DbManager()
@@ -11,7 +13,9 @@ manager = DbManager()
 class Publisher:
     def __init__(self):
         self.queue = "download_queue"
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+        self.connection = pika.BlockingConnection(
+            pika.ConnectionParameters(host="localhost")
+        )
         self.channel = self.connection.channel()
 
         result = self.channel.queue_declare(queue="", exclusive=True)
@@ -20,7 +24,8 @@ class Publisher:
         self.channel.basic_consume(
             queue=self.callback_queue,
             on_message_callback=self.on_response,
-            auto_ack=True)
+            auto_ack=True,
+        )
 
     def on_response(self, ch, method, props, body):
         manager.update_task_status(uuid=props.correlation_id, status="done")
@@ -32,10 +37,9 @@ class Publisher:
             exchange="",
             routing_key=self.queue,
             properties=pika.BasicProperties(
-                reply_to=self.callback_queue,
-                correlation_id=corr_id,
+                reply_to=self.callback_queue, correlation_id=corr_id,
             ),
-            body=dumps(task)
+            body=dumps(task),
         )
         return corr_id
 

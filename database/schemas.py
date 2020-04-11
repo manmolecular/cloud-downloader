@@ -10,4 +10,3 @@ class User(BaseModel):
 class Task(BaseModel):
     uuid: str = Field(..., min_length=1, max_length=100)
     status: str = Field(..., min_length=1, max_length=100)
-
