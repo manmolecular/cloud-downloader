@@ -1,0 +1,81 @@
+version: "3.7"
+
+services:
+  db:
+    container_name: cloud-downloader-db
+    image: postgres:alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_PASSWORD: pass1234
+      POSTGRES_USER: admin1234
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    networks:
+      - postgres
+    ports:
+      - "127.0.0.1:5432:5432"
+  pgadmin:
+    container_name: cloud-downloader-pgadmin
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+       - pgadmin:/root/.pgadmin
+    networks:
+      - postgres
+    ports:
+      - "80:80"
+  rabbitmq:
+    container_name: cloud-downloader-rabbitmq
+    image: rabbitmq:alpine
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:15672:15672"
+      - "127.0.0.1:5672:5672"
+    networks:
+      - rabbitmq
+  consumer:
+    container_name: cloud-downloader-consumer
+    image: cloud-downloader-consumer:1.0
+    depends_on:
+      - db
+      - rabbitmq
+    build:
+      context: .
+      target: cloud-downloader-consumer
+      dockerfile: docker/consumer/Dockerfile
+    networks:
+      - rabbitmq
+    volumes:
+      - "./data:/app/data"
+    restart: always
+  server:
+    container_name: cloud-downloader-server
+    image: cloud-downloader-server:1.0
+    depends_on:
+      - db
+      - rabbitmq
+    build:
+      context: .
+      target: cloud-downloader-server
+      dockerfile: docker/server/Dockerfile
+    ports:
+      - "8888:8888"
+    networks:
+      - rabbitmq
+      - postgres
+    restart: always
+
+networks:
+  postgres:
+    driver: bridge
+  rabbitmq:
+    driver: bridge
+
+volumes:
+    postgres:
+    pgadmin:

@@ -11,10 +11,10 @@ manager = DbManager()
 
 
 class Publisher:
-    def __init__(self):
+    def __init__(self, host: str = "localhost"):
         self.queue = "download_queue"
         self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host="localhost")
+            pika.ConnectionParameters(host=host)
         )
         self.channel = self.connection.channel()
 

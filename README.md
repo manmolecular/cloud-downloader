@@ -1,19 +1,12 @@
 # cloud-downloader
 Download files directly into the cloud by URL
-
 ## Run
-### Deploy:  
+### Deploy  
 ```bash
-virtualenv -p python3 venv
-source venv/bin/activate
-chmod +x publisher.py consumer.py run_postgres.sh run_rabbitmq.sh
-./run_postgres.sh
-./run_rabbitmq.sh
-./consumer.py
-./server.py
+docker-compose up
 ```
 
-### Usage:  
+### Usage  
 Register:  
 ```bash
 curl --location --request POST 'http://localhost:8888/api/register' \

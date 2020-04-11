@@ -4,13 +4,18 @@ import tornado.escape
 import tornado.ioloop
 import tornado.process
 import tornado.web
+from sys import argv
 
 import settings
 from database.crud import DbManager
 from database.schemas import User, Task
 from publisher.publisher import Publisher
 
-publisher = Publisher()
+try:
+    publisher = Publisher(host=argv[1])
+except:
+    publisher = Publisher()
+
 manager = DbManager()
 
 
