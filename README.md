@@ -1,10 +1,16 @@
 # cloud-downloader
-Download files directly into the cloud by URL
+:rocket: Download files directly into the cloud with a list of URLs (RabbitMQ, PostgreSQL, Tornado Web Server)
+
+## Note
+:construction: Work in progress. Early PoC. 
+
 ## Run
 ### Deploy  
+Run
 ```bash
 docker-compose up
 ```
+And wait until the consumer and server will connect to RabbitMQ and PostgreSQL (about 10-20 seconds).
 
 ### Usage  
 Register:  
@@ -38,3 +44,4 @@ Check status:
 ```bash
 http://localhost:8888/api/status?uuid=2b29a2c7-169a-417c-9bf8-239b1f283cd5
 ```
+If status is "ok/done", you can check downloaded files in `data/{UUID}` directory.
