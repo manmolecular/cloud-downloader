@@ -29,7 +29,7 @@ curl --location --request POST 'http://localhost:8888/api/login' \
 --data-raw '{
     "username": "testuser",
     "password": "testpassword"
-} -c cookies.txt'
+}' -c cookies.txt
 ```
 Create task:
 ```bash
@@ -38,7 +38,7 @@ curl --location --request POST 'http://localhost:8888/api/download' \
 --data-raw '[
     "http://www.tsu.ru/upload/medialibrary/22d/pobeda75.jpg",
     "http://www.tsu.ru/upload/resize_cache/iblock/4e7/320_213_2/0m8a8521_drugtsu_cam520.jpg"
-] -b cookies.txt'
+]' -b cookies.txt
 ```
 Check status:
 ```bash
