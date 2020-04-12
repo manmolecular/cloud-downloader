@@ -29,7 +29,7 @@ curl --location --request POST 'http://localhost:8888/api/login' \
 --data-raw '{
     "username": "testuser",
     "password": "testpassword"
-}'
+} -c cookies.txt'
 ```
 Create task:
 ```bash
@@ -38,10 +38,14 @@ curl --location --request POST 'http://localhost:8888/api/download' \
 --data-raw '[
     "http://www.tsu.ru/upload/medialibrary/22d/pobeda75.jpg",
     "http://www.tsu.ru/upload/resize_cache/iblock/4e7/320_213_2/0m8a8521_drugtsu_cam520.jpg"
-]'
+] -b cookies.txt'
 ```
 Check status:
 ```bash
 http://localhost:8888/api/status?uuid=2b29a2c7-169a-417c-9bf8-239b1f283cd5
+```
+or  
+```bash
+curl --location --request GET 'http://localhost:8888/api/status?uuid=4ae0f42d-552d-46ea-8358-6938a40aa8fe' -b cookies.txt
 ```
 If status is "ok/done", you can check downloaded files in `data/{UUID}` directory.
