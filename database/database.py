@@ -11,7 +11,14 @@ pg_connection = Config.DATABASE_URI
 
 
 def choose_engine():
-    for network in ["localhost", "postgres", "docker.host.internal", "docker.for.mac.host.internal", "host.docker.internal"]:
+    for network in [
+        "localhost",
+        "cloud-downloader-db",
+        "postgres",
+        "docker.host.internal",
+        "docker.for.mac.host.internal",
+        "host.docker.internal"
+    ]:
         if network == "localhost":
             continue
         try:
