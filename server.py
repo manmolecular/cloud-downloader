@@ -4,18 +4,16 @@ import tornado.escape
 import tornado.ioloop
 import tornado.process
 import tornado.web
-from sys import argv
+from os import environ
 
 import settings
 from database.crud import DbManager
 from database.schemas import User, Task
 from publisher.publisher import Publisher
 
-try:
-    publisher = Publisher(host=argv[1])
-except:
-    publisher = Publisher()
-
+rabbit_mq_host = environ.get("RABBITMQ_HOST") or "localhost"
+print(f"Use {rabbit_mq_host} as RabbitMQ host")
+publisher = Publisher(host=rabbit_mq_host)
 manager = DbManager()
 
 
@@ -112,7 +110,7 @@ def make_app():
             "cookie_secret": settings.COOKIE_SECRET,
             "login_url": "/api/login",
             "debug": True,
-        }
+        },
     )
 
 

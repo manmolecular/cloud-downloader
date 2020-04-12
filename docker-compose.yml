@@ -38,12 +38,13 @@ services:
       - "127.0.0.1:5672:5672"
     networks:
       - rabbitmq
-  consumer:
-    container_name: cloud-downloader-consumer
+  cloud-downloader-consumer:
     image: cloud-downloader-consumer:1.0
     depends_on:
       - db
       - rabbitmq
+    environment:
+      - RABBITMQ_HOST=${RABBITMQ_HOST:-cloud-downloader-rabbitmq}
     build:
       context: .
       target: cloud-downloader-consumer
@@ -59,6 +60,9 @@ services:
     depends_on:
       - db
       - rabbitmq
+    environment:
+      - RABBITMQ_HOST=${RABBITMQ_HOST:-cloud-downloader-rabbitmq}
+      - POSTGRES_HOST=${POSTGRES_HOST:-cloud-downloader-db}
     build:
       context: .
       target: cloud-downloader-server

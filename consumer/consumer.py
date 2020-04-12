@@ -10,10 +10,7 @@ from consumer.downloader import Downloader
 class Consumer:
     def __init__(self, host: str = "localhost"):
         self.queue = "download_queue"
-        print(f"hostname is: {host}")
-        self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host=host)
-        )
+        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=host))
         self.channel = self.connection.channel()
         self.channel.queue_declare(queue=self.queue)
         self.downloader = Downloader(base_path="data")

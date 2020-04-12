@@ -10,4 +10,4 @@ WORKDIR /app
 RUN pip install --no-cache-dir requests pika
 
 ENV PYTHONPATH="/app"
-ENTRYPOINT ["python3", "consumer.py", "rabbitmq"]
+ENTRYPOINT ["python3", "consumer.py"]

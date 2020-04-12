@@ -6,9 +6,9 @@
 
 ## Run
 ### Deploy  
-Run
+Run with 5 downloader instances:
 ```bash
-docker-compose up
+docker-compose up --scale cloud-downloader-consumer=5
 ```
 And wait until the consumer and server will connect to RabbitMQ and PostgreSQL (about 10-20 seconds, you will see tracebacks and errors during this time - it's okay for now :smile:).
 

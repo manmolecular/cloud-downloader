@@ -17,4 +17,4 @@ RUN apk add --no-cache postgresql-dev gcc musl-dev && \
 
 EXPOSE 8888
 ENV PYTHONPATH="/app"
-ENTRYPOINT ["python3", "server.py", "rabbitmq"]
+ENTRYPOINT ["python3", "server.py"]
