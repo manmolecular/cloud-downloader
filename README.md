@@ -30,7 +30,8 @@ curl --location --request POST 'http://localhost:8888/api/login' \
     "username": "testuser",
     "password": "testpassword"
 }' -c cookies.txt
-```s
+```
+
 Create task:
 ```bash
 curl --location --request POST 'http://localhost:8888/api/upload' \
