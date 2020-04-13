@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from json import dumps
-from uuid import uuid4
 
 import pika
 
@@ -31,20 +30,21 @@ class Publisher:
         manager.update_task_status(uuid=props.correlation_id, status="done")
         print(f"Done task {props.correlation_id}")
 
-    def publish_task(self, task: list):
-        corr_id = str(uuid4())
+    def publish_task(self, task: list, uuid: str):
         self.channel.basic_publish(
             exchange="",
             routing_key=self.queue,
             properties=pika.BasicProperties(
-                reply_to=self.callback_queue, correlation_id=corr_id,
+                reply_to=self.callback_queue, correlation_id=uuid,
             ),
             body=dumps(task),
         )
-        return corr_id
 
     def process_data_events(self):
         self.connection.process_data_events(time_limit=1)
 
     def __del__(self):
-        self.connection.close()
+        try:
+            self.connection.close()
+        except:
+            pass

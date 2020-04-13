@@ -33,4 +33,7 @@ class Consumer:
         self.channel.start_consuming()
 
     def __del__(self):
-        self.connection.close()
+        try:
+            self.connection.close()
+        except:
+            pass

@@ -30,14 +30,24 @@ curl --location --request POST 'http://localhost:8888/api/login' \
     "username": "testuser",
     "password": "testpassword"
 }' -c cookies.txt
-```
+```s
 Create task:
 ```bash
-curl --location --request POST 'http://localhost:8888/api/download' \
+curl --location --request POST 'http://localhost:8888/api/upload' \
 --header 'Content-Type: application/json' \
 --data-raw '[
-    "http://www.tsu.ru/upload/medialibrary/22d/pobeda75.jpg",
-    "http://www.tsu.ru/upload/resize_cache/iblock/4e7/320_213_2/0m8a8521_drugtsu_cam520.jpg"
+    "https://file-examples.com/wp-content/uploads/2017/10/file_example_JPG_100kB.jpg",
+    "https://file-examples.com/wp-content/uploads/2017/10/file_example_JPG_500kB.jpg",
+    "https://file-examples.com/wp-content/uploads/2017/10/file_example_JPG_1MB.jpg",
+    "https://file-examples.com/wp-content/uploads/2017/10/file_example_JPG_2500kB.jpg",
+    "https://file-examples.com/wp-content/uploads/2017/02/zip_2MB.zip",
+    "https://file-examples.com/wp-content/uploads/2017/02/zip_5MB.zip",
+    "https://file-examples.com/wp-content/uploads/2017/02/zip_9MB.zip",
+    "https://file-examples.com/wp-content/uploads/2017/02/zip_10MB.zip",
+    "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
+    "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_2MG.mp3",
+    "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_1MG.mp3",
+    "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_700KB.mp3"
 ]' -b cookies.txt
 ```
 Check status:
