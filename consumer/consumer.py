@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from json import loads
+from json import loads, dumps
 
 import pika
 
@@ -24,7 +24,7 @@ class Consumer:
             exchange="",
             routing_key=properties.reply_to,
             properties=pika.BasicProperties(correlation_id=properties.correlation_id),
-            body=str(properties.correlation_id),
+            body=dumps(url_list),
         )
         ch.basic_ack(delivery_tag=method.delivery_tag)
 

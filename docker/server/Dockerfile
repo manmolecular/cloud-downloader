@@ -7,6 +7,7 @@ LABEL org.label-schema.name="Cloud Downloader Server" \
 COPY consumer /app/consumer/
 COPY database /app/database/
 COPY publisher /app/publisher/
+COPY handlers /app/handlers/
 COPY server.py /app/server.py
 COPY settings.py /app/settings.py
 COPY requirements.txt /app/requirements.txt

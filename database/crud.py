@@ -2,6 +2,7 @@
 
 from hashlib import sha512
 from typing import AnyStr
+from json import loads
 
 from sqlalchemy.orm import Session
 
@@ -43,7 +44,10 @@ class DbManager:
             .filter(models.User.username == user_model.username)
             .first()
         )
-        return user_db.password == user_model.password
+        try:
+            return user_db.password == user_model.password
+        except:
+            pass
 
     def create_task(self, task: schemas.Task, session: Session = SessionLocal()):
         task_model = models.Task(**task.dict())
@@ -57,9 +61,21 @@ class DbManager:
             session.close()
 
     def get_task_status(self, uuid: str, session: Session = SessionLocal()):
-        return (
-            session.query(models.Task).filter(models.Task.uuid == uuid).first().status
-        )
+        try:
+            return (
+                session.query(models.Task).filter(models.Task.uuid == uuid).first().status
+            )
+        except:
+            pass
+
+    def get_task_urls(self, uuid: str, session: Session = SessionLocal()):
+        try:
+            return loads(session.query(models.Task).filter(models.Task.uuid == uuid).first().urls)
+        except:
+            pass
+
+    def get_task_uuids(self, session: Session = SessionLocal()):
+        return session.query(models.Task.uuid)
 
     def update_task_status(
         self, uuid: str, status: str, session: Session = SessionLocal()

@@ -19,9 +19,10 @@ class Task(Base):
     __tablename__ = "tasks"
     id = Column(Integer, primary_key=True, index=True)
     uuid = Column(String, unique=True, index=True)
+    urls = Column(String)
     status = Column(String)
 
     def __repr__(self):
         return (
-            f"<Task(id='{self.id}', uuid='{self.username}', status='{self.password}')>"
+            f"<Task(id='{self.id}', uuid='{self.username}', urls='{self.urls}', status='{self.password}')>"
         )

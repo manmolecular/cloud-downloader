@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from json import dumps
+from json import dumps, loads
 
 import pika
 
@@ -12,9 +12,7 @@ manager = DbManager()
 class Publisher:
     def __init__(self, host: str = "localhost"):
         self.queue = "download_queue"
-        self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host=host)
-        )
+        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=host))
         self.channel = self.connection.channel()
 
         result = self.channel.queue_declare(queue="", exclusive=True)

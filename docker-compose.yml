@@ -72,6 +72,8 @@ services:
     networks:
       - postgres
       - rabbitmq
+    volumes:
+      - "./data:/app/data"
     restart: always
 
 networks:
